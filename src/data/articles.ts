@@ -489,7 +489,7 @@ export const ARTICLES: Article[] = [
         body: "",
         bullets: [
           "Crying that changes suddenly and dramatically, or you can't settle your baby at all",
-          "Refusing several feeds in a row, or明显 reduced wet diapers",
+          "Refusing several feeds in a row, or clearly reduced wet diapers",
           "Spreading redness, swelling, warmth or discharge around the cord, a wound or the diaper area",
           "Persistent diarrhea or constipation with discomfort",
           "An ear-pulling, feverish, inconsolable baby",
