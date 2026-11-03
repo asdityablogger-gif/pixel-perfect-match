@@ -84,7 +84,7 @@ function FeedingFormDialog({
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  entry?: FeedingEntry;
+  entry?: FeedingEntry | undefined;
 }) {
   const data = useAppData();
   const baby = activeBaby(data);

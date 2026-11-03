@@ -10,11 +10,19 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CareRouteImport } from './routes/care'
 import { Route as FeedingsRouteImport } from './routes/feedings'
+import { Route as GrowthRouteImport } from './routes/growth'
+import { Route as SleepRouteImport } from './routes/sleep'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareRoute = CareRouteImport.update({
+  id: '/care',
+  path: '/care',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FeedingsRoute = FeedingsRouteImport.update({
@@ -22,31 +30,53 @@ const FeedingsRoute = FeedingsRouteImport.update({
   path: '/feedings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GrowthRoute = GrowthRouteImport.update({
+  id: '/growth',
+  path: '/growth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SleepRoute = SleepRouteImport.update({
+  id: '/sleep',
+  path: '/sleep',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/care': typeof CareRoute
   '/feedings': typeof FeedingsRoute
+  '/growth': typeof GrowthRoute
+  '/sleep': typeof SleepRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/care': typeof CareRoute
   '/feedings': typeof FeedingsRoute
+  '/growth': typeof GrowthRoute
+  '/sleep': typeof SleepRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/care': typeof CareRoute
   '/feedings': typeof FeedingsRoute
+  '/growth': typeof GrowthRoute
+  '/sleep': typeof SleepRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/feedings'
+  fullPaths: '/' | '/care' | '/feedings' | '/growth' | '/sleep'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/feedings'
-  id: '__root__' | '/' | '/feedings'
+  to: '/' | '/care' | '/feedings' | '/growth' | '/sleep'
+  id: '__root__' | '/' | '/care' | '/feedings' | '/growth' | '/sleep'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CareRoute: typeof CareRoute
   FeedingsRoute: typeof FeedingsRoute
+  GrowthRoute: typeof GrowthRoute
+  SleepRoute: typeof SleepRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,6 +88,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/care': {
+      id: '/care'
+      path: '/care'
+      fullPath: '/care'
+      preLoaderRoute: typeof CareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/feedings': {
       id: '/feedings'
       path: '/feedings'
@@ -65,12 +102,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FeedingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/growth': {
+      id: '/growth'
+      path: '/growth'
+      fullPath: '/growth'
+      preLoaderRoute: typeof GrowthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sleep': {
+      id: '/sleep'
+      path: '/sleep'
+      fullPath: '/sleep'
+      preLoaderRoute: typeof SleepRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CareRoute: CareRoute,
   FeedingsRoute: FeedingsRoute,
+  GrowthRoute: GrowthRoute,
+  SleepRoute: SleepRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
