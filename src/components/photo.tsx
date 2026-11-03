@@ -8,9 +8,9 @@ export function PhotoImg({
   alt,
   className,
 }: {
-  photoKey?: string;
+  photoKey?: string | undefined;
   alt: string;
-  className?: string;
+  className?: string | undefined;
 }) {
   const [url, setUrl] = useState<string>();
 
