@@ -16,13 +16,13 @@ export function dateFromISO(iso: string): Date {
   // "YYYY-MM-DD" parsed as local date, "YYYY-MM-DDTHH:mm" as local time.
   if (iso.length <= 10) {
     const [y, m, d] = iso.split("-").map(Number);
-    return new Date(y, (m ?? 1) - 1, d ?? 1);
+    return new Date(y ?? 2020, (m ?? 1) - 1, d ?? 1);
   }
   if (iso.length <= 16) {
-    const [datePart, timePart] = iso.split("T");
+    const [datePart = iso, timePart] = iso.split("T");
     const [y, m, d] = datePart.split("-").map(Number);
     const [hh, mm] = (timePart ?? "00:00").split(":").map(Number);
-    return new Date(y, (m ?? 1) - 1, d ?? 1, hh ?? 0, mm ?? 0);
+    return new Date(y ?? 2020, (m ?? 1) - 1, d ?? 1, hh ?? 0, mm ?? 0);
   }
   return new Date(iso);
 }
@@ -137,7 +137,7 @@ export function combineDateTime(dateISO: string, time: string): string {
 }
 
 export function splitISO(iso: string): { date: string; time: string } {
-  const [date, time = ""] = iso.split("T");
+  const [date = iso, time = ""] = iso.split("T");
   return { date, time: time.slice(0, 5) };
 }
 

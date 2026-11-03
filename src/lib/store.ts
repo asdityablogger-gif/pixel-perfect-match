@@ -178,7 +178,8 @@ export function updateItem<K extends CollectionKey>(
   update((d) => {
     const list = d[key] as { id: string }[];
     const idx = list.findIndex((r) => r.id === id);
-    if (idx >= 0) Object.assign(list[idx], patch);
+    const rec = list[idx];
+    if (idx >= 0 && rec) Object.assign(rec, patch);
   });
 }
 
