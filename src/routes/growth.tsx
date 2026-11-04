@@ -102,14 +102,21 @@ function GrowthFormDialog({
       toast.error("Please pick a date.");
       return;
     }
-    const fields = {
+    const w = num(weight);
+    const h = num(height);
+    const hd = num(head);
+    const fields: Partial<GrowthEntry> = {
       date,
-      ...(num(weight) ? { weightKg: num(weight) } : {}),
-      ...(num(height) ? { heightCm: num(height) } : {}),
-      ...(num(head) ? { headCm: num(head) } : {}),
       ...(note.trim() ? { note: note.trim() } : {}),
     };
-    if (!fields.weightKg && !fields.heightCm && !fields.headCm) {
+    if (w !== undefined) fields.weightKg = w;
+    if (h !== undefined) fields.heightCm = h;
+    if (hd !== undefined) fields.headCm = hd;
+    if (
+      fields.weightKg === undefined &&
+      fields.heightCm === undefined &&
+      fields.headCm === undefined
+    ) {
       toast.error("Add at least one measurement.");
       return;
     }
@@ -117,7 +124,11 @@ function GrowthFormDialog({
       updateItem("growth", entry.id, fields);
       toast.success("Measurement updated");
     } else {
-      addItem("growth", { id: crypto.randomUUID(), babyId: baby.id, ...fields });
+      addItem("growth", {
+        id: crypto.randomUUID(),
+        babyId: baby.id,
+        ...fields,
+      });
       toast.success("Measurement saved");
     }
     onOpenChange(false);
