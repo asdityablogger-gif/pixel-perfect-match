@@ -124,11 +124,16 @@ function GrowthFormDialog({
       updateItem("growth", entry.id, fields);
       toast.success("Measurement updated");
     } else {
-      addItem("growth", {
+      const full: GrowthEntry = {
         id: crypto.randomUUID(),
         babyId: baby.id,
-        ...fields,
-      });
+        date,
+      };
+      if (fields.weightKg !== undefined) full.weightKg = fields.weightKg;
+      if (fields.heightCm !== undefined) full.heightCm = fields.heightCm;
+      if (fields.headCm !== undefined) full.headCm = fields.headCm;
+      if (fields.note !== undefined) full.note = fields.note;
+      addItem("growth", full);
       toast.success("Measurement saved");
     }
     onOpenChange(false);
