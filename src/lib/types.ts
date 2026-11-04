@@ -52,6 +52,7 @@ export interface CareEntry {
   kind: CareKind;
   detail?: string;
   durationMin?: number;
+  note?: string;
   at: string; // ISO datetime
 }
 
