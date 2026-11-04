@@ -13,9 +13,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CareRouteImport } from './routes/care'
 import { Route as FeedingsRouteImport } from './routes/feedings'
 import { Route as GrowthRouteImport } from './routes/growth'
+import { Route as JournalRouteImport } from './routes/journal'
 import { Route as LearnRouteImport } from './routes/learn'
 import { Route as MoreRouteImport } from './routes/more'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SleepRouteImport } from './routes/sleep'
+import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
 
 const IndexRoute = IndexRouteImport.update({
@@ -38,6 +41,11 @@ const GrowthRoute = GrowthRouteImport.update({
   path: '/growth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JournalRoute = JournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LearnRoute = LearnRouteImport.update({
   id: '/learn',
   path: '/learn',
@@ -48,9 +56,19 @@ const MoreRoute = MoreRouteImport.update({
   path: '/more',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SleepRoute = SleepRouteImport.update({
   id: '/sleep',
   path: '/sleep',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TasksRoute = TasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LearnIndexRoute = LearnIndexRouteImport.update({
@@ -64,9 +82,12 @@ export interface FileRoutesByFullPath {
   '/care': typeof CareRoute
   '/feedings': typeof FeedingsRoute
   '/growth': typeof GrowthRoute
+  '/journal': typeof JournalRoute
   '/learn': typeof LearnRouteWithChildren
   '/more': typeof MoreRoute
+  '/settings': typeof SettingsRoute
   '/sleep': typeof SleepRoute
+  '/tasks': typeof TasksRoute
   '/learn/': typeof LearnIndexRoute
 }
 export interface FileRoutesByTo {
@@ -74,8 +95,11 @@ export interface FileRoutesByTo {
   '/care': typeof CareRoute
   '/feedings': typeof FeedingsRoute
   '/growth': typeof GrowthRoute
+  '/journal': typeof JournalRoute
   '/more': typeof MoreRoute
+  '/settings': typeof SettingsRoute
   '/sleep': typeof SleepRoute
+  '/tasks': typeof TasksRoute
   '/learn': typeof LearnIndexRoute
 }
 export interface FileRoutesById {
@@ -84,9 +108,12 @@ export interface FileRoutesById {
   '/care': typeof CareRoute
   '/feedings': typeof FeedingsRoute
   '/growth': typeof GrowthRoute
+  '/journal': typeof JournalRoute
   '/learn': typeof LearnRouteWithChildren
   '/more': typeof MoreRoute
+  '/settings': typeof SettingsRoute
   '/sleep': typeof SleepRoute
+  '/tasks': typeof TasksRoute
   '/learn/': typeof LearnIndexRoute
 }
 export interface FileRouteTypes {
@@ -96,21 +123,37 @@ export interface FileRouteTypes {
     | '/care'
     | '/feedings'
     | '/growth'
+    | '/journal'
     | '/learn'
     | '/more'
+    | '/settings'
     | '/sleep'
+    | '/tasks'
     | '/learn/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/care' | '/feedings' | '/growth' | '/more' | '/sleep' | '/learn'
+  to:
+    | '/'
+    | '/care'
+    | '/feedings'
+    | '/growth'
+    | '/journal'
+    | '/more'
+    | '/settings'
+    | '/sleep'
+    | '/tasks'
+    | '/learn'
   id:
     | '__root__'
     | '/'
     | '/care'
     | '/feedings'
     | '/growth'
+    | '/journal'
     | '/learn'
     | '/more'
+    | '/settings'
     | '/sleep'
+    | '/tasks'
     | '/learn/'
   fileRoutesById: FileRoutesById
 }
@@ -119,9 +162,12 @@ export interface RootRouteChildren {
   CareRoute: typeof CareRoute
   FeedingsRoute: typeof FeedingsRoute
   GrowthRoute: typeof GrowthRoute
+  JournalRoute: typeof JournalRoute
   LearnRoute: typeof LearnRouteWithChildren
   MoreRoute: typeof MoreRoute
+  SettingsRoute: typeof SettingsRoute
   SleepRoute: typeof SleepRoute
+  TasksRoute: typeof TasksRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -154,6 +200,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GrowthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/journal': {
+      id: '/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof JournalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/learn': {
       id: '/learn'
       path: '/learn'
@@ -168,11 +221,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MoreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sleep': {
       id: '/sleep'
       path: '/sleep'
       fullPath: '/sleep'
       preLoaderRoute: typeof SleepRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tasks': {
+      id: '/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof TasksRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/learn/': {
@@ -200,9 +267,12 @@ const rootRouteChildren: RootRouteChildren = {
   CareRoute: CareRoute,
   FeedingsRoute: FeedingsRoute,
   GrowthRoute: GrowthRoute,
+  JournalRoute: JournalRoute,
   LearnRoute: LearnRouteWithChildren,
   MoreRoute: MoreRoute,
+  SettingsRoute: SettingsRoute,
   SleepRoute: SleepRoute,
+  TasksRoute: TasksRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
