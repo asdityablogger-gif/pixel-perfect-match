@@ -13,7 +13,10 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CareRouteImport } from './routes/care'
 import { Route as FeedingsRouteImport } from './routes/feedings'
 import { Route as GrowthRouteImport } from './routes/growth'
+import { Route as LearnRouteImport } from './routes/learn'
+import { Route as MoreRouteImport } from './routes/more'
 import { Route as SleepRouteImport } from './routes/sleep'
+import { Route as LearnIndexRouteImport } from './routes/learn.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -35,10 +38,25 @@ const GrowthRoute = GrowthRouteImport.update({
   path: '/growth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LearnRoute = LearnRouteImport.update({
+  id: '/learn',
+  path: '/learn',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoreRoute = MoreRouteImport.update({
+  id: '/more',
+  path: '/more',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SleepRoute = SleepRouteImport.update({
   id: '/sleep',
   path: '/sleep',
   getParentRoute: () => rootRouteImport,
+} as any)
+const LearnIndexRoute = LearnIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LearnRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -46,14 +64,19 @@ export interface FileRoutesByFullPath {
   '/care': typeof CareRoute
   '/feedings': typeof FeedingsRoute
   '/growth': typeof GrowthRoute
+  '/learn': typeof LearnRouteWithChildren
+  '/more': typeof MoreRoute
   '/sleep': typeof SleepRoute
+  '/learn/': typeof LearnIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/care': typeof CareRoute
   '/feedings': typeof FeedingsRoute
   '/growth': typeof GrowthRoute
+  '/more': typeof MoreRoute
   '/sleep': typeof SleepRoute
+  '/learn': typeof LearnIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -61,14 +84,34 @@ export interface FileRoutesById {
   '/care': typeof CareRoute
   '/feedings': typeof FeedingsRoute
   '/growth': typeof GrowthRoute
+  '/learn': typeof LearnRouteWithChildren
+  '/more': typeof MoreRoute
   '/sleep': typeof SleepRoute
+  '/learn/': typeof LearnIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/care' | '/feedings' | '/growth' | '/sleep'
+  fullPaths:
+    | '/'
+    | '/care'
+    | '/feedings'
+    | '/growth'
+    | '/learn'
+    | '/more'
+    | '/sleep'
+    | '/learn/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/care' | '/feedings' | '/growth' | '/sleep'
-  id: '__root__' | '/' | '/care' | '/feedings' | '/growth' | '/sleep'
+  to: '/' | '/care' | '/feedings' | '/growth' | '/more' | '/sleep' | '/learn'
+  id:
+    | '__root__'
+    | '/'
+    | '/care'
+    | '/feedings'
+    | '/growth'
+    | '/learn'
+    | '/more'
+    | '/sleep'
+    | '/learn/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,6 +119,8 @@ export interface RootRouteChildren {
   CareRoute: typeof CareRoute
   FeedingsRoute: typeof FeedingsRoute
   GrowthRoute: typeof GrowthRoute
+  LearnRoute: typeof LearnRouteWithChildren
+  MoreRoute: typeof MoreRoute
   SleepRoute: typeof SleepRoute
 }
 
@@ -109,6 +154,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GrowthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/learn': {
+      id: '/learn'
+      path: '/learn'
+      fullPath: '/learn'
+      preLoaderRoute: typeof LearnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/more': {
+      id: '/more'
+      path: '/more'
+      fullPath: '/more'
+      preLoaderRoute: typeof MoreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sleep': {
       id: '/sleep'
       path: '/sleep'
@@ -116,14 +175,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SleepRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/learn/': {
+      id: '/learn/'
+      path: '/'
+      fullPath: '/learn/'
+      preLoaderRoute: typeof LearnIndexRouteImport
+      parentRoute: typeof LearnRoute
+    }
   }
 }
+
+interface LearnRouteChildren {
+  LearnIndexRoute: typeof LearnIndexRoute
+}
+
+const LearnRouteChildren: LearnRouteChildren = {
+  LearnIndexRoute: LearnIndexRoute,
+}
+
+const LearnRouteWithChildren = LearnRoute._addFileChildren(LearnRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CareRoute: CareRoute,
   FeedingsRoute: FeedingsRoute,
   GrowthRoute: GrowthRoute,
+  LearnRoute: LearnRouteWithChildren,
+  MoreRoute: MoreRoute,
   SleepRoute: SleepRoute,
 }
 export const routeTree = rootRouteImport
