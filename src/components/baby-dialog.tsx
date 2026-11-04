@@ -32,7 +32,7 @@ export function BabyDialog({
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  baby?: Baby;
+  baby?: Baby | undefined;
 }) {
   const [name, setName] = useState("");
   const [birthDate, setBirthDate] = useState(todayISO());

@@ -87,7 +87,7 @@ function TasksPage() {
     addTask({
       title: title.trim(),
       category: tab,
-      babyId: baby?.id,
+      ...(baby ? { babyId: baby.id } : {}),
       ...(due ? { due } : {}),
       ...(assignee.trim() ? { assignee: assignee.trim() } : {}),
       ...(reminderAt ? { reminderAt } : {}),
@@ -109,10 +109,9 @@ function TasksPage() {
   }
 
   function toggle(t: TaskEntry) {
-    updateItem("tasks", t.id, {
-      done: !t.done,
-      doneAt: !t.done ? new Date().toISOString() : undefined,
-    });
+    const patch: Partial<TaskEntry> = { done: !t.done };
+    if (!t.done) patch.doneAt = new Date().toISOString();
+    updateItem("tasks", t.id, patch);
   }
 
   function row(t: TaskEntry) {
