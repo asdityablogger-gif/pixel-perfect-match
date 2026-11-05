@@ -15,11 +15,15 @@ import { Route as FeedingsRouteImport } from './routes/feedings'
 import { Route as GrowthRouteImport } from './routes/growth'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as LearnRouteImport } from './routes/learn'
+import { Route as MemoriesRouteImport } from './routes/memories'
+import { Route as MilestonesRouteImport } from './routes/milestones'
 import { Route as MoreRouteImport } from './routes/more'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SleepRouteImport } from './routes/sleep'
 import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
+import { Route as LearnArticleSlugRouteImport } from './routes/learn.article.$slug'
+import { Route as LearnGuideIdRouteImport } from './routes/learn.guide.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -51,6 +55,16 @@ const LearnRoute = LearnRouteImport.update({
   path: '/learn',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MemoriesRoute = MemoriesRouteImport.update({
+  id: '/memories',
+  path: '/memories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MilestonesRoute = MilestonesRouteImport.update({
+  id: '/milestones',
+  path: '/milestones',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MoreRoute = MoreRouteImport.update({
   id: '/more',
   path: '/more',
@@ -76,6 +90,16 @@ const LearnIndexRoute = LearnIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LearnRoute,
 } as any)
+const LearnArticleSlugRoute = LearnArticleSlugRouteImport.update({
+  id: '/article/$slug',
+  path: '/article/$slug',
+  getParentRoute: () => LearnRoute,
+} as any)
+const LearnGuideIdRoute = LearnGuideIdRouteImport.update({
+  id: '/guide/$id',
+  path: '/guide/$id',
+  getParentRoute: () => LearnRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -84,11 +108,15 @@ export interface FileRoutesByFullPath {
   '/growth': typeof GrowthRoute
   '/journal': typeof JournalRoute
   '/learn': typeof LearnRouteWithChildren
+  '/memories': typeof MemoriesRoute
+  '/milestones': typeof MilestonesRoute
   '/more': typeof MoreRoute
   '/settings': typeof SettingsRoute
   '/sleep': typeof SleepRoute
   '/tasks': typeof TasksRoute
   '/learn/': typeof LearnIndexRoute
+  '/learn/article/$slug': typeof LearnArticleSlugRoute
+  '/learn/guide/$id': typeof LearnGuideIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -96,11 +124,15 @@ export interface FileRoutesByTo {
   '/feedings': typeof FeedingsRoute
   '/growth': typeof GrowthRoute
   '/journal': typeof JournalRoute
+  '/memories': typeof MemoriesRoute
+  '/milestones': typeof MilestonesRoute
   '/more': typeof MoreRoute
   '/settings': typeof SettingsRoute
   '/sleep': typeof SleepRoute
   '/tasks': typeof TasksRoute
   '/learn': typeof LearnIndexRoute
+  '/learn/article/$slug': typeof LearnArticleSlugRoute
+  '/learn/guide/$id': typeof LearnGuideIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -110,11 +142,15 @@ export interface FileRoutesById {
   '/growth': typeof GrowthRoute
   '/journal': typeof JournalRoute
   '/learn': typeof LearnRouteWithChildren
+  '/memories': typeof MemoriesRoute
+  '/milestones': typeof MilestonesRoute
   '/more': typeof MoreRoute
   '/settings': typeof SettingsRoute
   '/sleep': typeof SleepRoute
   '/tasks': typeof TasksRoute
   '/learn/': typeof LearnIndexRoute
+  '/learn/article/$slug': typeof LearnArticleSlugRoute
+  '/learn/guide/$id': typeof LearnGuideIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -125,11 +161,15 @@ export interface FileRouteTypes {
     | '/growth'
     | '/journal'
     | '/learn'
+    | '/memories'
+    | '/milestones'
     | '/more'
     | '/settings'
     | '/sleep'
     | '/tasks'
     | '/learn/'
+    | '/learn/article/$slug'
+    | '/learn/guide/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -137,11 +177,15 @@ export interface FileRouteTypes {
     | '/feedings'
     | '/growth'
     | '/journal'
+    | '/memories'
+    | '/milestones'
     | '/more'
     | '/settings'
     | '/sleep'
     | '/tasks'
     | '/learn'
+    | '/learn/article/$slug'
+    | '/learn/guide/$id'
   id:
     | '__root__'
     | '/'
@@ -150,11 +194,15 @@ export interface FileRouteTypes {
     | '/growth'
     | '/journal'
     | '/learn'
+    | '/memories'
+    | '/milestones'
     | '/more'
     | '/settings'
     | '/sleep'
     | '/tasks'
     | '/learn/'
+    | '/learn/article/$slug'
+    | '/learn/guide/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -164,6 +212,8 @@ export interface RootRouteChildren {
   GrowthRoute: typeof GrowthRoute
   JournalRoute: typeof JournalRoute
   LearnRoute: typeof LearnRouteWithChildren
+  MemoriesRoute: typeof MemoriesRoute
+  MilestonesRoute: typeof MilestonesRoute
   MoreRoute: typeof MoreRoute
   SettingsRoute: typeof SettingsRoute
   SleepRoute: typeof SleepRoute
@@ -214,6 +264,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/memories': {
+      id: '/memories'
+      path: '/memories'
+      fullPath: '/memories'
+      preLoaderRoute: typeof MemoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/milestones': {
+      id: '/milestones'
+      path: '/milestones'
+      fullPath: '/milestones'
+      preLoaderRoute: typeof MilestonesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/more': {
       id: '/more'
       path: '/more'
@@ -249,15 +313,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnIndexRouteImport
       parentRoute: typeof LearnRoute
     }
+    '/learn/article/$slug': {
+      id: '/learn/article/$slug'
+      path: '/article/$slug'
+      fullPath: '/learn/article/$slug'
+      preLoaderRoute: typeof LearnArticleSlugRouteImport
+      parentRoute: typeof LearnRoute
+    }
+    '/learn/guide/$id': {
+      id: '/learn/guide/$id'
+      path: '/guide/$id'
+      fullPath: '/learn/guide/$id'
+      preLoaderRoute: typeof LearnGuideIdRouteImport
+      parentRoute: typeof LearnRoute
+    }
   }
 }
 
 interface LearnRouteChildren {
   LearnIndexRoute: typeof LearnIndexRoute
+  LearnArticleSlugRoute: typeof LearnArticleSlugRoute
+  LearnGuideIdRoute: typeof LearnGuideIdRoute
 }
 
 const LearnRouteChildren: LearnRouteChildren = {
   LearnIndexRoute: LearnIndexRoute,
+  LearnArticleSlugRoute: LearnArticleSlugRoute,
+  LearnGuideIdRoute: LearnGuideIdRoute,
 }
 
 const LearnRouteWithChildren = LearnRoute._addFileChildren(LearnRouteChildren)
@@ -269,6 +351,8 @@ const rootRouteChildren: RootRouteChildren = {
   GrowthRoute: GrowthRoute,
   JournalRoute: JournalRoute,
   LearnRoute: LearnRouteWithChildren,
+  MemoriesRoute: MemoriesRoute,
+  MilestonesRoute: MilestonesRoute,
   MoreRoute: MoreRoute,
   SettingsRoute: SettingsRoute,
   SleepRoute: SleepRoute,
