@@ -52,7 +52,7 @@ function MilestoneFormDialog({
   open: boolean;
   onOpenChange: (open: boolean) => void;
   entry?: MilestoneEntry | undefined;
-  prefillTitle?: string;
+  prefillTitle?: string | undefined;
 }) {
   const data = useAppData();
   const baby = activeBaby(data);
@@ -91,7 +91,7 @@ function MilestoneFormDialog({
         if (photoKey) await deletePhoto(photoKey);
         photoKey = await savePhoto(file);
       }
-      const patch: MilestoneEntry = {
+      const patch = {
         title: clean,
         date,
         ...(note.trim() ? { note: note.trim() } : {}),
