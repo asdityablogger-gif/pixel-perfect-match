@@ -20,6 +20,8 @@ import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SleepRouteImport } from './routes/sleep'
 import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
+import { Route as LearnArticleSlugRouteImport } from './routes/learn.article.$slug'
+import { Route as LearnGuideIdRouteImport } from './routes/learn.guide.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -76,6 +78,16 @@ const LearnIndexRoute = LearnIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LearnRoute,
 } as any)
+const LearnArticleSlugRoute = LearnArticleSlugRouteImport.update({
+  id: '/article/$slug',
+  path: '/article/$slug',
+  getParentRoute: () => LearnRoute,
+} as any)
+const LearnGuideIdRoute = LearnGuideIdRouteImport.update({
+  id: '/guide/$id',
+  path: '/guide/$id',
+  getParentRoute: () => LearnRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -89,6 +101,8 @@ export interface FileRoutesByFullPath {
   '/sleep': typeof SleepRoute
   '/tasks': typeof TasksRoute
   '/learn/': typeof LearnIndexRoute
+  '/learn/article/$slug': typeof LearnArticleSlugRoute
+  '/learn/guide/$id': typeof LearnGuideIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -101,6 +115,8 @@ export interface FileRoutesByTo {
   '/sleep': typeof SleepRoute
   '/tasks': typeof TasksRoute
   '/learn': typeof LearnIndexRoute
+  '/learn/article/$slug': typeof LearnArticleSlugRoute
+  '/learn/guide/$id': typeof LearnGuideIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -115,6 +131,8 @@ export interface FileRoutesById {
   '/sleep': typeof SleepRoute
   '/tasks': typeof TasksRoute
   '/learn/': typeof LearnIndexRoute
+  '/learn/article/$slug': typeof LearnArticleSlugRoute
+  '/learn/guide/$id': typeof LearnGuideIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -130,6 +148,8 @@ export interface FileRouteTypes {
     | '/sleep'
     | '/tasks'
     | '/learn/'
+    | '/learn/article/$slug'
+    | '/learn/guide/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -142,6 +162,8 @@ export interface FileRouteTypes {
     | '/sleep'
     | '/tasks'
     | '/learn'
+    | '/learn/article/$slug'
+    | '/learn/guide/$id'
   id:
     | '__root__'
     | '/'
@@ -155,6 +177,8 @@ export interface FileRouteTypes {
     | '/sleep'
     | '/tasks'
     | '/learn/'
+    | '/learn/article/$slug'
+    | '/learn/guide/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -249,15 +273,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnIndexRouteImport
       parentRoute: typeof LearnRoute
     }
+    '/learn/article/$slug': {
+      id: '/learn/article/$slug'
+      path: '/article/$slug'
+      fullPath: '/learn/article/$slug'
+      preLoaderRoute: typeof LearnArticleSlugRouteImport
+      parentRoute: typeof LearnRoute
+    }
+    '/learn/guide/$id': {
+      id: '/learn/guide/$id'
+      path: '/guide/$id'
+      fullPath: '/learn/guide/$id'
+      preLoaderRoute: typeof LearnGuideIdRouteImport
+      parentRoute: typeof LearnRoute
+    }
   }
 }
 
 interface LearnRouteChildren {
   LearnIndexRoute: typeof LearnIndexRoute
+  LearnArticleSlugRoute: typeof LearnArticleSlugRoute
+  LearnGuideIdRoute: typeof LearnGuideIdRoute
 }
 
 const LearnRouteChildren: LearnRouteChildren = {
   LearnIndexRoute: LearnIndexRoute,
+  LearnArticleSlugRoute: LearnArticleSlugRoute,
+  LearnGuideIdRoute: LearnGuideIdRoute,
 }
 
 const LearnRouteWithChildren = LearnRoute._addFileChildren(LearnRouteChildren)
