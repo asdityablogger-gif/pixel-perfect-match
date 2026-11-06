@@ -49,6 +49,7 @@ function sanitize(input: unknown): AppData {
 }
 
 let data: AppData = emptyData();
+const serverSnapshot = emptyData();
 let hydrated = false;
 const listeners = new Set<() => void>();
 
@@ -88,7 +89,7 @@ export function getData(): AppData {
 }
 
 export function getServerData(): AppData {
-  return emptyData();
+  return serverSnapshot;
 }
 
 function subscribe(fn: () => void) {
